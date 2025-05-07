@@ -103,7 +103,7 @@ scms:
       
 actions:
   default:
-    title: 'Update Coredns chart version to {{ source "coredns" }}'
+    title: 'Update Coredns chart version to {{ source "coredns_chart" }}'
     kind: github/pullrequest
     spec:
       automerge: false
