@@ -68,7 +68,7 @@ sources:
 
 targets:
   coredns:
-    name: "Bump to latest CoreDNS chart and images version"
+    name: "Bump to latest CoreDNS chart and images"
     kind: shell
     scmid: default
     sourceid: coredns_chart
@@ -105,12 +105,11 @@ actions:
     kind: github/pullrequest
     spec:
       automerge: false
-      description: '
-Update chart to use the following image versions:\n
-- rancher/hardened-coredns:{{ source "coredns" }}\n
-- rancher/hardened-cluster-autoscaler:{{ source "autoscaler" }}\n
-- rancher/hardened-dns-node-cache:{{ source "nodecache" }}\n
-'
+      description:
+        Update chart to use the following image versions:\n
+        - rancher/hardened-coredns:{{ source "coredns" }}\n
+        - rancher/hardened-cluster-autoscaler:{{ source "autoscaler" }}\n
+        - rancher/hardened-dns-node-cache:{{ source "nodecache" }}\n
       labels:
         - chore
         - skip-changelog
