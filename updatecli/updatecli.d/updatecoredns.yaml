@@ -1,6 +1,4 @@
 ---
-name: "Update CoreDNS version"
-
 sources:
   coredns_chart:
     name: Get CoreDNS chart version
@@ -103,14 +101,16 @@ scms:
       
 actions:
   default:
-    title: 'Update CoreDNS chart to {{ source "coredns_chart" }}'
+    title: 'Update to CoreDNS chart version {{ source "coredns_chart" }}'
     kind: github/pullrequest
     spec:
       automerge: false
-      description: 'Update CoreDNS chart to use the following image version:
-- rancher/hardened-coredns:{{ source "coredns" }}
-- rancher/hardened-cluster-autoscaler:{{ source "autoscaler" }}
-- rancher/hardened-dns-node-cache:{{ source "nodecache" }}'
+      description: '
+Update chart to use the following image versions:\n
+- rancher/hardened-coredns:{{ source "coredns" }}\n
+- rancher/hardened-cluster-autoscaler:{{ source "autoscaler" }}\n
+- rancher/hardened-dns-node-cache:{{ source "nodecache" }}\n
+'
       labels:
         - chore
         - skip-changelog
