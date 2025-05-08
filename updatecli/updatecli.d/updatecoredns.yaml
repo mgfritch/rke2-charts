@@ -103,10 +103,14 @@ scms:
       
 actions:
   default:
-    title: 'Update CoreDNS chart version to {{ source "coredns_chart" }}'
+    title: 'Update CoreDNS chart to {{ source "coredns_chart" }}'
     kind: github/pullrequest
     spec:
       automerge: false
+      description: 'Update CoreDNS chart to use the following image version:
+- rancher/hardened-coredns:{{ source "coredns" }}
+- rancher/hardened-cluster-autoscaler:{{ source "autoscaler" }}
+- rancher/hardened-dns-node-cache:{{ source "nodecache" }}'
       labels:
         - chore
         - skip-changelog
