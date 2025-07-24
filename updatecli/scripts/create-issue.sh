@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-BODY="Url of the failed run: ${UPDATECLI_GITHUB_WORKFLOW_URL}"
+BODY="Failed workflow run: ${UPDATECLI_GITHUB_WORKFLOW_URL}"
 
 GITHUB_APP="rancher-issues-manager"
 TARGET_REPOSITORY="rancher/rke2"
@@ -11,17 +11,25 @@ report-error() {
 
     if [[ $exit_code != 0 ]]; then
         #check if issue already exists
-        issues=$(gh issue list -R ${TARGET_REPOSITORY} \
-                    --search "is:open ${ISSUE_TITLE}" \
-                    --app ${GITHUB_APP} --json number --jq ".[].number" | wc -l)
+        issue=$(
+            gh issue list
+                -R ${TARGET_REPOSITORY} \
+                --app ${GITHUB_APP} \
+                --search "is:open ${ISSUE_TITLE}" \
+                --json number --jq ".[].number" | sort -run | head -1
+        )
 
-        if [[ $issues = 0 ]]; then
-            echo "Creating issue for: ${ISSUE_TITLE}"
-            gh issue create -R ${TARGET_REPOSITORY} \
+        if [[ -z "$issue" ]]; then
+            echo "Creating issue for: '${ISSUE_TITLE}'"
+            gh issue create
+                -R ${TARGET_REPOSITORY} \
                 --title "${ISSUE_TITLE}" \
                 --body "${BODY}"
         else
-            echo "Issue already exists for: ${ISSUE_TITLE}"
+            echo "Issue $issue already exists for: '${ISSUE_TITLE}'"
+            gh issue comment ${issue} \
+                -R ${TARGET_REPOSITORY} \
+                --body "${BODY}"
         fi
     fi
 
