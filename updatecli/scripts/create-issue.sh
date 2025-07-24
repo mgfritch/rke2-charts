@@ -12,7 +12,7 @@ report-error() {
     if [[ $exit_code != 0 ]]; then
         #check if issue already exists
         issue=$(
-            gh issue list
+            gh issue list \
                 --repo ${TARGET_REPOSITORY} \
                 --app ${GITHUB_APP} \
                 --search "is:open ${ISSUE_TITLE}" \
@@ -21,7 +21,7 @@ report-error() {
 
         if [[ -z "$issue" ]]; then
             echo "Creating issue for: '${ISSUE_TITLE}'"
-            gh issue create
+            gh issue create \
                 --repo ${TARGET_REPOSITORY} \
                 --title "${ISSUE_TITLE}" \
                 --body "${BODY}"
