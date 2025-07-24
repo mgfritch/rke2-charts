@@ -2,7 +2,7 @@
 
 BODY="Failed workflow run: ${UPDATECLI_GITHUB_WORKFLOW_URL}"
 
-GITHUB_APP="rancher-issues-manager"
+GITHUB_APP="mgfritch"
 TARGET_REPOSITORY="mgfritch/rke2"
 
 report-error() {
@@ -14,7 +14,6 @@ report-error() {
         issue=$(
             gh issue list \
                 --repo ${TARGET_REPOSITORY} \
-                --app ${GITHUB_APP} \
                 --search "is:open ${ISSUE_TITLE}" \
                 --json number --jq ".[].number" | sort -run | head -1
         )
