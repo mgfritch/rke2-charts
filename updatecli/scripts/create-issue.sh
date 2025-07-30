@@ -3,7 +3,7 @@
 ISSUE_BODY="Failed workflow run: ${UPDATECLI_GITHUB_WORKFLOW_URL}"
 
 GITHUB_APP="rancher-issues-manager"
-GITHUB_REPOSITORY="rancher/rke2"
+GITHUB_REPOSITORY="mgfritch/rke2"
 
 report-error() {
     exit_code=$?
@@ -12,7 +12,6 @@ report-error() {
     if [[ $exit_code != 0 ]]; then
         issue=$(
             gh issue list \
-                --app ${GITHUB_APP} \
                 --repo ${GITHUB_REPOSITORY} \
                 --state "open" \
                 --search "${ISSUE_TITLE}" \
