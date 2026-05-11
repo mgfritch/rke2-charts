@@ -3,7 +3,7 @@
 ISSUE_BODY="Failed workflow run: ${UPDATECLI_GITHUB_WORKFLOW_URL}"
 
 GITHUB_APP="rancher-issues-manager"
-GITHUB_REPOSITORY="rancher/rke2"
+GITHUB_REPOSITORY="mgfritch/rke2"
 
 report-error() {
     exit_code=$?
