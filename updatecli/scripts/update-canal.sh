@@ -19,7 +19,7 @@ fi
 if [ -n "$CALICO_VERSION" ]; then
 	current_calico_version=$(yq '.calico.cniImage.tag' packages/rke2-canal/charts/values.yaml)
 	if [ "$current_calico_version" != "$CALICO_VERSION" ]; then
-		echo "Updating flannel image to $CALICO_VERSION"
+		echo "Updating calico image to $CALICO_VERSION"
 		yq -i ".calico.cniImage.tag = \"$CALICO_VERSION\" |
 			.calico.flexvolImage.tag = \"$CALICO_VERSION\" |
 			.calico.nodeImage.tag = \"$CALICO_VERSION\" |
@@ -27,6 +27,15 @@ if [ -n "$CALICO_VERSION" ]; then
 		app_version=$(echo "$CALICO_VERSION" | grep -Eo 'v[0-9]+.[0-9]+.[0-9]+')
 		yq -i ".version = \"$CALICO_VERSION\" |
 			.appVersion = \"$app_version\"" packages/rke2-canal/charts/Chart.yaml
+
+		echo "Updating Calico CRDs to $CALICO_VERSION"
+		mkdir -p workdir
+		wget -P workdir/ https://github.com/projectcalico/calico/releases/download/$CALICO_VERSION/crd.projectcalico.org.v1-$CALICO_VERSION.tgz
+		tar --directory=workdir -xf workdir/crd.projectcalico.org.v1-$CALICO_VERSION.tgz
+		rm -f packages/rke2-canal/charts/templates/crds/*
+		cp workdir/crd.projectcalico.org.v1/templates/calico/* packages/rke2-canal/charts/templates/crds/
+		rm -fr workdir
+
 		sed -i "s/packageVersion:.*/packageVersion: 00/g" packages/rke2-canal/package.yaml
 	fi
 fi
