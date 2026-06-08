@@ -17,7 +17,7 @@ jobs:
   updatecli:
     runs-on: ubuntu-latest
     # if you want to testupdatecli on another branch, you also need to modify updatecli/values.yaml
-    if: ${{github.ref == 'refs/heads/main-source' && github.repository == 'rancher/rke2-charts'}}
+    #if: ${{github.ref == 'refs/heads/main-source' && github.repository == 'rancher/rke2-charts'}}
     steps:
       - name: Checkout
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4

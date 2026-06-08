@@ -5,4 +5,4 @@ github:
   token: "UPDATECLI_GITHUB_TOKEN"
   repository: "rke2-charts"
   branch: "main-source"
-  owner: "rancher"
+  owner: "mgfritch"
