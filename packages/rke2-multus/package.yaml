@@ -1,9 +1,3 @@
 url: local
 workingDir: charts
 packageVersion: 17
-additionalCharts:
-  - workingDir: charts-crd
-    crdOptions:
-      templateDirectory: crd-template
-      crdDirectory: templates
-      addCRDValidationToMainChart: false
